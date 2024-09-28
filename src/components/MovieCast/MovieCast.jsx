@@ -10,6 +10,7 @@ export default function MovieCast() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  
   useEffect(() => {
         async function fetchData() {
             try {
