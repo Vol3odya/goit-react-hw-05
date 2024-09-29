@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import {reviewMovie} from "../../http/http-movies"
 import css from "./MovieReviews.module.css"
 
 export default function MovieReviews() {
  const location = useLocation();
-  const id = parseInt(location.pathname.substr(8, 14));
+  const { movieId } = useParams();
   const [review, setReview] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -15,7 +15,7 @@ export default function MovieReviews() {
             try {
                 setLoading(true);
                 setError(false);
-              const data = await reviewMovie(id);
+              const data = await reviewMovie(movieId);
                 setReview(data.data.results);
                 
             } catch (error) {
@@ -25,7 +25,7 @@ export default function MovieReviews() {
             }
         }
         fetchData();
-    }, []);
+    }, [movieId]);
 
   return (
     <ul>

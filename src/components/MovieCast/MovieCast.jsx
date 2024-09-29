@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import {castMovie} from "../../http/http-movies"
 import css from "./MovieCast.module.css"
 
 export default function MovieCast() {
   const location = useLocation();
-  const id = parseInt(location.pathname.substr(8, 14));
+  const { movieId } = useParams();
   const [cast, setCast] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -16,7 +16,7 @@ export default function MovieCast() {
             try {
                 setLoading(true);
                 setError(false);
-                const data = await castMovie(id);
+                const data = await castMovie(movieId);
                 setCast(data.data.cast);
                 
             } catch (error) {
@@ -26,7 +26,7 @@ export default function MovieCast() {
             }
         }
         fetchData();
-    }, []);
+    }, [movieId]);
 
   return (
     <ul>
